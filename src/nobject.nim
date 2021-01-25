@@ -306,9 +306,42 @@ proc `-`*(left: Object, right: Object): Object =
     else:
       error(fmt"Incompatible type: tried to perform op `-` on type `{left.code}`")
 
+# myObj * myObj1
+
+proc `*`*(left: Object, right: Object): Object =
+  if left.code != right.code:
+    error(fmt"Incompatible types: tried to perform op `*` between types `{left.code}` and `{right.code}`")
+  case left.code
+    of ocInt8: newObject(left.i8 mul right.i8)
+    of ocInt32: newObject(left.i32 mul right.i32)
+    of ocInt64: newObject(left.i64 mul right.i64)
+    
+    of ocFloat64: newObject(left.f64 mul right.f64)
+    
+    else:
+      error(fmt"Incompatible type: tried to perform op `*` on type `{left.code}`")
+
+proc `/`*(left: Object, right: Object): Object =
+  if left.code != right.code:
+    error(fmt"Incompatible types: tried to perform op `/` between types `{left.code}` and `{right.code}`")
+  case left.code
+    of ocInt8: newObject(left.i8 div right.i8)
+    of ocInt32: newObject(left.i32 div right.i32)
+    of ocInt64: newObject(left.i64 div right.i64)
+    
+    of ocFloat64: newObject(left.f64 div right.f64)
+    
+    else:
+      error(fmt"Incompatible type: tried to perform op `/` on type `{left.code}`")
+
 # converters -> Object to ... -> not all due to ambiguous calls
 
 # bool
 converter toObject*(self: Object): bool =
   self.expectType(ocBool)
   self.u1
+
+# methods -> Object
+
+proc getType*(self: Object): ObjectCode =
+  self.code
