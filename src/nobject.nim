@@ -337,7 +337,7 @@ proc `/`*(left: Object, right: Object): Object =
 # converters -> Object to ... -> not all due to ambiguous calls
 
 # bool
-converter toObject*(self: Object): bool =
+converter toBool*(self: Object): bool =
   self.expectType(ocBool)
   self.u1
 
