@@ -129,12 +129,16 @@ proc expectType(self: Object, expected: ObjectCode) =
   if self.code != expected:
     error(fmt"Unsupported operation: tried to convert type `{self.code}` in `{expected}`")
 
+proc checkType(self: Object, code: ObjectCode): bool = self.code == code
+
 proc convert[T](self: ObjectInstance): T = cast[ptr T](self.instance)[]
+
+proc checkType[T](self: ObjectInstance): bool = self.runtimeID == $T
 
 # myObj as Type
 
 proc `as`*(self: Object, T: typedesc): T =
-  when T is int16:
+  when T is int8:
     self.expectType(ocInt8)
     self.i8
   elif T is int:
@@ -166,6 +170,23 @@ proc `as`*(self: Object, T: typedesc): T =
     self.expectType(ocInstance)
     convert[T](self.ins)
 
+# myObj is Type
+
+proc `of`*(self: Object, T: typedesc): bool =
+  when T is int8: self.checkType(ocInt8)
+  elif T is int: self.checkType(ocInt32)
+  elif T is int64: self.checkType(ocInt64)
+
+  elif T is bool: self.checkType(ocBool)
+  
+  elif T is float64: self.checkType(ocFloat64)
+  
+  elif T is string: self.checkType(ocString)
+  elif T is char: self.checkType(ocChar)
+  elif T is ObjectArray: self.checkType(ocArray)
+
+  else: checkType[T](self.ins)
+
 # myObj == myObj1
 
 proc `==`*(left: Object, right: Object): bool =
@@ -190,7 +211,7 @@ proc `==`*(left: Object, right: Object): bool =
 
 # myObj != myObj1
 
-proc `!=`*(left: Object, right: Object): bool = not(left != right)
+proc `!=`*(left: Object, right: Object): bool = not(left == right)
 
 # myObj < myObj1
 
