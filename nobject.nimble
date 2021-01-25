@@ -1,12 +1,12 @@
 # Package
 
-version       = "0.0.4"
+version       = "0.1.0"
 author        = "Carpall"
-description   = "A partially compile and runtime evaluated object, inspired from .net object"
+description   = "A partially compile and runtime evaluated object, inspired to .net object"
 license       = "MIT"
 srcDir        = "src"
 
 
 # Dependencies
 
-requires "nim >= 1.4."
+requires "nim >= 1.4.2"

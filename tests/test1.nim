@@ -1,13 +1,6 @@
 import unittest
 
 import nobject
-
-type
-  X = ref object
-    y: object
-
-var x: ref X = X(y: "")
-
 test "Comparing Objects Test":
   let obj: Object = 2
   let obj1: Object = null
