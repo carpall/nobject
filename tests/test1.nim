@@ -6,6 +6,7 @@ type
   Person = object
     name: string
     age: uint8
+  Person2 = object
 
 test "Comparing Objects Test":
   let obj: Object = 2
@@ -32,4 +33,4 @@ test "Comparing Test":
   var p = Person(name: "ciao")
   var t: Object = newObject(p)
   assert t of Person
-  assert not(t of int)
+  assert not(t of Person2)
