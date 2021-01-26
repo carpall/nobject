@@ -12,7 +12,7 @@ echo s.getType()             # ocString, where oc means ObjectCode
 let x: Object = s of string  # true
 s = x                        # changing type at runtime
 if x:
-  echo "Implicit convertion to bool"
+  echo "Implicit conversion to bool"
 ```
 
 Another example
